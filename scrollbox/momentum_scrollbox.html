@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      border: solid 1px black;
+    }
+    #main {
+      margin-top:30px;
+    }
+    #header {
+      position:fixed;
+      top: 0;
+      width:100%;
+      height: 30px;
+      background-color:gray;
+      color:white;
+    }
+    .box {
+      border: solid 1px black;
+      width: 150px;
+      height: 1.5rem;
+    }
+    .rel-box {
+      position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border: solid 1px red;
+      width: 150px;
+      height: 150px;
+    }
+    .ab-box {
+      position: absolute;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border: solid 1px blue;
+      width: 150px;
+      height: 150px;
+      top:30px;
+      right:0;
+    }
+    .fix-box {
+      position: fixed;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border: solid 1px green;
+      width: 150px;
+      height: 150px;
+      top:200px;
+      right:0;
+    }
+    .static-box {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border: solid 1px purple;
+      width: 150px;
+      height: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="static-box" class="static-box">
+      <h4>position:static</h4>
+    </div>
+    <div id="rel-box" class="rel-box">
+      <h4>position:relative</h4>
+    </div>
+    <h4>position:static</br>(Normal Flow)</h4>
+    <div id="ab-box" class="ab-box">
+      <h4>position:absolute</h4>
+    </div>
+    <div id="fix-box" class="fix-box">
+      <h4>position:fixed</h4>
+    </div>
+  </div>
+<script>
+var fragment = document.createDocumentFragment();
+for(var i = 0; i < 1000; i++) {
+  var div = document.createElement('div');
+  div.innerHTML = i;
+  div.className = 'box'
+  fragment.appendChild(div);
+}
+var mainEl = document.getElementById('main');
+var staticBoxEl = document.getElementById('static-box');
+var relBoxEl = document.getElementById('rel-box');
+var abBoxEl = document.getElementById('ab-box');
+var fixBoxEl = document.getElementById('fix-box');
+relBoxEl.appendChild(fragment.cloneNode(true));
+abBoxEl.appendChild(fragment.cloneNode(true));
+fixBoxEl.appendChild(fragment.cloneNode(true));
+staticBoxEl.appendChild(fragment.cloneNode(true));
+mainEl.appendChild(fragment);
+
+var getZoomRatio = function() {
+  return document.documentElement.clientWidth / window.innerWidth
+}
+window.onload = function() {
+  document.getElementById('header').innerHTML=`zoom ratio : ${getZoomRatio()}`
+}
+window.addEventListener('scroll', function (event) {
+  document.getElementById('header').innerHTML=`zoom ratio : ${getZoomRatio()}`;
+});
+</script>
+</body>
+</html>
